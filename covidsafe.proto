@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.corona.comms";
+option java_outer_classname = "TestProto";
+option objc_class_prefix = "CC";
+
+package corona;
+
+service Registration {
+	rpc RegisterUser (RegistrationInfo) returns (UserRegistered) {}
+}
+
+service InfectedDataUpload {
+	rpc AddInfectedUser (InfectedUserData) returns (AddedInfectedUser) {}
+}
+
+message RegistrationInfo {
+	string phone = 1;
+	string key = 2;
+}
+
+message InfectedUserData {
+	string phone = 1;
+	string key = 2;
+	string dob = 3;
+}
+
+message UserRegistered {
+	bool success = 1;
+}
+
+message AddedInfectedUser {
+	bool success = 1;
+}
