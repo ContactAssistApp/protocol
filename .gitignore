@@ -1,3 +1,7 @@
+# python pb2 files
+covidsafe_pb2.py
+covidsafe_pb2_grpc.py
+
 # vim temp files
 *.swp
 *.swo
