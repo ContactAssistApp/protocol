@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "google/protobuf/timestamp.proto";
+
 option java_multiple_files = true;
 option java_package = "com.example.corona.comms";
 option java_outer_classname = "TestProto";
@@ -7,11 +9,8 @@ option objc_class_prefix = "CC";
 
 package corona;
 
-service Registration {
+service CovidSafeServer {
 	rpc registerUser (RegistrationInfo) returns (Registered) {}
-}
-
-service Logging {
 	rpc sendInfectedLogs (stream Log) returns (AddedLogs) {}
 	rpc getBLTContactLogs (stream Key) returns (stream BLTContactLog) {}
 }
@@ -28,7 +27,7 @@ message Registered {
 message InfectedUserData {
 	string phone = 1;
 	string key = 2;
-	string dob = 3;
+	google.protobuf.Timestamp dob = 3;
 }
 
 message AddedLogs {
@@ -50,7 +49,7 @@ message Log {
 		GPS = 1;
 	}
 	LogType type = 1;
-	int64 timestamp = 2;
+	google.protobuf.Timestamp timestamp = 2;
 	oneof content {
 		bytes uuid = 3;
 		GPSCoordinate coordinate = 4;
