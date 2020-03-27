@@ -43,6 +43,11 @@ message GPSCoordinate {
 	double longitude = 2;
 }
 
+message BLTResult {
+	bytes uuid = 1;	
+	string name = 2;
+}
+
 message Log {
 	enum LogType {
 		BLT = 0;
@@ -51,7 +56,7 @@ message Log {
 	LogType type = 1;
 	google.protobuf.Timestamp timestamp = 2;
 	oneof content {
-		bytes uuid = 3;
+		BLTResult bltResult = 3;
 		GPSCoordinate coordinate = 4;
 	}
 }
