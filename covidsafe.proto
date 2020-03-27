@@ -8,16 +8,21 @@ option objc_class_prefix = "CC";
 package corona;
 
 service Registration {
-	rpc RegisterUser (RegistrationInfo) returns (UserRegistered) {}
+	rpc registerUser (RegistrationInfo) returns (Registered) {}
 }
 
-service InfectedDataUpload {
-	rpc AddInfectedUser (InfectedUserData) returns (AddedInfectedUser) {}
+service Logging {
+	rpc sendInfectedLogs (stream Log) returns (AddedLogs) {}
+	rpc getBLTContactLogs (stream Key) returns (stream BLTContactLog) {}
 }
 
 message RegistrationInfo {
 	string phone = 1;
 	string key = 2;
+}
+
+message Registered {
+	bool success = 1;
 }
 
 message InfectedUserData {
@@ -26,10 +31,33 @@ message InfectedUserData {
 	string dob = 3;
 }
 
-message UserRegistered {
+message AddedLogs {
 	bool success = 1;
 }
 
-message AddedInfectedUser {
-	bool success = 1;
+message Key {
+	bytes key = 1;
+}
+
+message GPSCoordinate {
+	double latitude = 1;
+	double longitude = 2;
+}
+
+message Log {
+	enum LogType {
+		BLT = 0;
+		GPS = 1;
+	}
+	LogType type = 1;
+	int64 timestamp = 2;
+	oneof content {
+		bytes uuid = 3;
+		GPSCoordinate coordinate = 4;
+	}
+}
+
+message BLTContactLog {
+	Key key = 1;
+	repeated bytes uuid = 2;
 }
