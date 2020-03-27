@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "com.example.corona.comms";
+option java_outer_classname = "TestProto";
+option objc_class_prefix = "CC";
+
+package corona;
+
+service CovidSafeServer {
+	rpc registerUser (RegistrationInfo) returns (Registered) {}
+	rpc sendInfectedLogs (stream Log) returns (AddedLogs) {}
+	rpc getBLTContactLogs (stream Key) returns (stream BLTContactLog) {}
+}
+
+message RegistrationInfo {
+	string phone = 1;
+	string key = 2;
+}
+
+message Registered {
+	bool success = 1;
+}
+
+message InfectedUserData {
+	string phone = 1;
+	string key = 2;
+	google.protobuf.Timestamp dob = 3;
+}
+
+message AddedLogs {
+	bool success = 1;
+}
+
+message Key {
+	bytes key = 1;
+}
+
+message GPSCoordinate {
+	double latitude = 1;
+	double longitude = 2;
+}
+
+message Log {
+	enum LogType {
+		BLT = 0;
+		GPS = 1;
+	}
+	LogType type = 1;
+	google.protobuf.Timestamp timestamp = 2;
+	oneof content {
+		bytes uuid = 3;
+		GPSCoordinate coordinate = 4;
+	}
+}
+
+message BLTContactLog {
+	Key key = 1;
+	repeated bytes uuid = 2;
+}
