@@ -27,7 +27,7 @@ message Registered {
 message InfectedUserData {
 	string phone = 1;
 	string key = 2;
-	google.protobuf.Timestamp dob = 3;
+	int64 dob = 3;
 }
 
 message AddedLogs {
@@ -54,7 +54,7 @@ message Log {
 		GPS = 1;
 	}
 	LogType type = 1;
-	google.protobuf.Timestamp timestamp = 2;
+	int64 timestamp = 2;
 	oneof content {
 		BLTResult bltResult = 3;
 		GPSCoordinate coordinate = 4;
