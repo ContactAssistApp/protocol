@@ -10,6 +10,7 @@ package corona;
 service CovidSafeServer {
 	rpc registerUser (RegistrationInfo) returns (Registered) {}
 	rpc sendInfectedLogs (stream Log) returns (AddedLogs) {}
+	rpc sendInfectedUserData (InfectedUserData) returns (UserDataSent) {}
 	rpc getBLTContactLogs (stream Key) returns (stream BLTContactLog) {}
 }
 
@@ -22,10 +23,15 @@ message Registered {
 	bool success = 1;
 }
 
+message UserDataSent {
+	bool success = 1;
+}
+
 message InfectedUserData {
 	string phone = 1;
 	string key = 2;
 	int64 dob = 3;
+	string name = 4;
 }
 
 message AddedLogs {
@@ -62,4 +68,5 @@ message Log {
 message BLTContactLog {
 	Key key = 1;
 	repeated bytes uuid = 2;
+	repeated int64 timestamp = 3;
 }
