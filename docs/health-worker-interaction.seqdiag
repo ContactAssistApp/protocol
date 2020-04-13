@@ -1,0 +1,4 @@
+title:Infected Person without app talking to a health worker
+infected_person -> medical_prof/phone : Information
+medical_prof/phone -> server : AreaMatch\n(Announce and AreaMatch which contains\nareas of interest and a user message)
+server ->medical_prof/phone : Status
