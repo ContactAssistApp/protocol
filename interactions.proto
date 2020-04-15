@@ -3,17 +3,6 @@ syntax = "proto3";
 package Corona;
 option csharp_namespace = "CovidSafe.Entities.Protos";
 
-// Phone -> Server; Request to get size of messages queued for a region since last query time
-message MessageSizeRequest {
-  Region region = 1;
-  int64 last_query_time = 2;
-}
-
-// Server -> Phone; Provide size of query in bytes of the response
-message MessageSizeResponse {
-  int64 size_of_query_response = 1;
-}
-
 // Phone -> Server;
 // Get list of messages queued for a region since last query time
 message MessageListRequest {
