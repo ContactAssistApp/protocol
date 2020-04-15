@@ -25,7 +25,7 @@ message MessageListRequest {
 // as_of tells a client the current server time to enable clock synchronization
 message MessageListResponse {
   repeated MessageInfo message_info = 1;
-  int64 as_of = 2;
+  int64 max_response_timestamp = 2;
 }
 
 // Phone -> Server GetMessages(new_message_ids)
