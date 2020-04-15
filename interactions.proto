@@ -49,7 +49,7 @@ message AreaMatch {
 message SelfReportRequest {
   // Anonymized blue tooth beacons (or other exact match identifiers if
   // available)
-  repeated BlueToothSeed seeds = 1;
+  repeated BluetoothSeed seeds = 1;
   // Coarse region that this request applies to specified
   // to maximum allowed privacy preserving precision
   Region region = 2;
@@ -84,10 +84,10 @@ message BluetoothMatch {
   string user_message = 1;
   // Anonymized blue tooth beacons (or other exact match identifiers if
   // available)
-  repeated BlueToothSeed seeds = 2;
+  repeated BluetoothSeed seeds = 2;
 }
 
-message BlueToothSeed{
+message BluetoothSeed{
   string seed = 1;
   int64 sequence_start_time = 2;
   int64 sequence_end_time = 3;
