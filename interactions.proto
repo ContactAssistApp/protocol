@@ -3,17 +3,6 @@ syntax = "proto3";
 package Corona;
 option csharp_namespace = "CovidSafe.Entities.Protos";
 
-// Phone -> Server; Request to get size of messages queued for a region since last query time
-message MessageSizeRequest {
-  Region region = 1;
-  int64 last_query_time = 2;
-}
-
-// Server -> Phone; Provide size of query in bytes of the response
-message MessageSizeResponse {
-  int64 size_of_query_response = 1;
-}
-
 // Phone -> Server;
 // Get list of messages queued for a region since last query time
 message MessageListRequest {
@@ -25,7 +14,7 @@ message MessageListRequest {
 // as_of tells a client the current server time to enable clock synchronization
 message MessageListResponse {
   repeated MessageInfo message_info = 1;
-  int64 as_of = 2;
+  int64 max_response_timestamp = 2;
 }
 
 // Phone -> Server GetMessages(new_message_ids)
@@ -66,7 +55,7 @@ message AreaMatch {
 message SelfReportRequest {
   // Anonymized blue tooth beacons (or other exact match identifiers if
   // available)
-  repeated BlueToothSeed seeds = 1;
+  repeated BluetoothSeed seeds = 1;
   // Coarse region that this request applies to specified
   // to maximum allowed privacy preserving precision
   Region region = 2;
