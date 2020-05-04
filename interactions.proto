@@ -36,7 +36,7 @@ message MatchMessage {
   // near <person>; where person is identified by some kind of blue tooth beacon
   repeated BlueToothSeed bluetooth_seeds = 3;
   // The message to display to the user if there is a blue tooth match.
-  string blue_tooth_match_message = 4;
+  string bluetooth_match_message = 4;
 }
 
 // Phone <-> Server;
