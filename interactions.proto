@@ -103,3 +103,15 @@ message Location {
   double latitude = 1;
   double longitude = 2;
 }
+
+message RequestValidationResult {
+  // Collection of validation failure messages
+  repeated RequestValidationFailure failures = 1;
+}
+
+message RequestValidationFailure {
+  // Validation error message
+  string message = 1;
+  // Failing property name
+  string property = 2;
+}
