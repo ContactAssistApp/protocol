@@ -11,7 +11,6 @@ message MessageListRequest {
 }
 
 // Server -> Phone; list of messages for region;
-// as_of tells a client the current server time to enable clock synchronization
 message MessageListResponse {
   repeated MessageInfo message_info = 1;
   int64 max_response_timestamp = 2;
@@ -25,7 +24,7 @@ message MessageRequest { repeated MessageInfo requested_queries = 1; }
 // infection can occour)
 message MatchMessage {
   // Not used at the moment.  Will eventually express a boolean relationship between
-  // elements in the area_match and bluetooth_match collections
+  // elements in the area_match collection
   string bool_expression = 1;
   // at or around <place[]> for more than <duration> around <time[]>
   repeated AreaMatch area_matches = 2;
