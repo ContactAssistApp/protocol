@@ -1,9 +1,9 @@
 title: General public notification message flow\nRegion = <lat_prefix,long_prefix,precision>\nLocation = <lat,long>\nAera = <Location,radius,begin_time,end_time>\nMessage = <data,signed_data,public_key>\nBluetooth Message = <seed,time>
 phone -> server : MessageSizeRequest(Region,last_query_time)
-server -> phone : MessageSizeResponse
+server -> phone : MessageSizeResponse in http content length header
 phone -> server : MessageListRequest(Region,last_query_time)
 server -> phone : MessageListResponse(message_ids[],query_times[])
 phone -> phone : new_message_ids[] = get_new_messages(query_ids[])\n|
 phone -> server : MessageRequest(new_query_ids[])
-server -> phone : MatchMessage\n(list of AreaMatch and BluetoothMatch critera)
+server -> phone : MatchMessageResponse\n(list of AreaMatch and BluetoothSeeds)
 phone -> phone : for_each_message\n__if match(message_condition)\n____raise_user_message()\n|
