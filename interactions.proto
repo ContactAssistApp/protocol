@@ -4,10 +4,9 @@ package Corona;
 option csharp_namespace = "CovidSafe.Entities.Protos";
 
 // Phone -> Server;
-// Get list of messages queued for a region since last query time
+// Get list of messages queued since last query time
 message MessageListRequest {
-  Region region = 1;
-  int64 last_query_time = 2;
+  int64 last_query_time = 1;
 }
 
 // Server -> Phone; list of messages for region;
