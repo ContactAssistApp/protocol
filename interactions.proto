@@ -104,11 +104,14 @@ message Location {
   double longitude = 2;
 }
 
+// Result object when a Narrowcast request fails
 message RequestValidationResult {
   // Collection of validation failure messages
   repeated RequestValidationFailure failures = 1;
 }
 
+// Individual NarrowCast request validation failure message
+// Describes why a request failed, generally for developer use only
 message RequestValidationFailure {
   // Validation error message
   string message = 1;
