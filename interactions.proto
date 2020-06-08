@@ -21,6 +21,10 @@ message MessageRequest { repeated MessageInfo requested_queries = 1; }
 
 // Server -> Phone (list of messages corresponding to touch points where
 // infection can occour)
+message MatchMessageResponse {
+  repeated MatchMessage match_messages = 1;
+}
+
 message MatchMessage {
   // Not used at the moment.  Will eventually express a boolean relationship between
   // elements in the area_match collection
@@ -73,4 +77,19 @@ message Area {
 message Location {
   double latitude = 1;
   double longitude = 2;
+}
+
+// Result object when a Narrowcast request fails
+message RequestValidationResult {
+  // Collection of validation failure messages
+  repeated RequestValidationFailure failures = 1;
+}
+
+// Individual NarrowCast request validation failure message
+// Describes why a request failed, generally for developer use only
+message RequestValidationFailure {
+  // Validation error message
+  string message = 1;
+  // Failing property name
+  string property = 2;
 }
