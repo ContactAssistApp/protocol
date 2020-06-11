@@ -29,8 +29,12 @@ message MatchMessage {
   // Not used at the moment.  Will eventually express a boolean relationship between
   // elements in the area_match collection
   string bool_expression = 1;
-  // at or around <place[]> for more than <duration> around <time[]>
+  // Locations impacted by message
   repeated AreaMatch area_matches = 2;
+  // Alert start time
+  int64 begin_time = 3;
+  // Alert end time
+  int64 end_time = 4;
 }
 
 // Phone <-> Server;
@@ -70,8 +74,6 @@ message MessageInfo {
 message Area {
   Location location = 1;
   float radius_meters = 2;
-  int64 begin_time = 3;
-  int64 end_time = 4;
 }
 
 message Location {
