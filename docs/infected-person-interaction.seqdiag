@@ -1,3 +1,2 @@
 title:Infected Person self reporting with app
 phone -> server : SelfReportRequest(BluetoothSeed[], Region)\n
-server -> phone : Status
