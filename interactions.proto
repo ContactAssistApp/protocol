@@ -46,6 +46,10 @@ message AreaMatch {
   string user_message = 1;
   // Areas of interest
   repeated Area areas = 2;
+  // Alert start time
+  int64 begin_time = 3;
+  // Alert end time
+  int64 end_time = 4;
 }
 
 // Server -> Phone
