@@ -10,9 +10,9 @@ message Area {
   // Radius, in meters, of coordinate coverage;
   float radius_meters = 2;
   // Alert start time;
-  int64 begin_time 3;
+  int64 begin_time = 3;
   // Alert end time;
-  int64 end_time 4;
+  int64 end_time = 4;
 }
 
 // Geographic location;
