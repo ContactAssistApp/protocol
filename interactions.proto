@@ -1,97 +1,97 @@
 syntax = "proto3";
 
 package Corona;
-option csharp_namespace = "CovidSafe.API.v20200601.Protos";
+option csharp_namespace = "CovidSafe.API.v20200611.Protos";
 
-// Phone -> Server;
-// Get list of messages queued since last query time
-message MessageListRequest {
-  int64 last_query_time = 1;
-}
-
-// Server -> Phone; list of messages for region;
-message MessageListResponse {
-  repeated MessageInfo message_info = 1;
-  int64 max_response_timestamp = 2;
-}
-
-// Phone -> Server GetMessages(new_message_ids)
-// Request to download the details of given query ids
-message MessageRequest { repeated MessageInfo requested_queries = 1; }
-
-// Server -> Phone (list of messages corresponding to touch points where
-// infection can occour)
-message MatchMessageResponse {
-  repeated MatchMessage match_messages = 1;
-}
-
-message MatchMessage {
-  // Not used at the moment.  Will eventually express a boolean relationship between
-  // elements in the area_match collection
-  string bool_expression = 1;
-  // Locations impacted by message
-  repeated AreaMatch area_matches = 2;
-}
-
-// Phone <-> Server;
-// 2 known uses
-// 1) Register a new announcement of area of interest
-// 2) Part of MatchMessage which aggregates AreaMatches
-message AreaMatch {
-  // Message to be displayed to the user if there is a match
-  string user_message = 1;
-  // Areas of interest
-  repeated Area areas = 2;
-  // Alert start time
-  int64 begin_time = 3;
-  // Alert end time
-  int64 end_time = 4;
-}
-
-// Server -> Phone
-// Generic response to requests that don't have any other response.
-// Contains status that details success (0) or failure (>0)
-// and has message that details the failure.
-message Status {
-  int32 status_code = 1;
-  string status_message = 2;
-}
-
-// Represents a geographic region quantized by precision of lat/long
-message Region {
-  double latitude_prefix = 1;
-  double longitude_prefix = 2;
-  // Mantissa mask.  Number of bits of Mantissa that should be preserved
-  int32 precision = 3;
-}
-
-// Metadata about each query
-message MessageInfo {
-  string message_id = 1;
-  int64 message_timestamp = 2;
-}
-
+// Geographic location at a point in time;
 message Area {
+  // Geographic location coordinates;
   Location location = 1;
+  // Radius, in meters, of coordinate coverage;
   float radius_meters = 2;
+  // Alert start time;
+  int64 begin_time 3;
+  // Alert end time;
+  int64 end_time 4;
 }
 
+// Geographic location;
 message Location {
+  // Latitude;
   double latitude = 1;
+  // Longitude;
   double longitude = 2;
 }
 
-// Result object when a Narrowcast request fails
+// Message metadata object;
+message MessageInfo {
+  // Unique Message identifier;
+  string message_id = 1;
+  // Message timestamp;
+  int64 message_timestamp = 2;
+}
+
+// Phone -> Server;
+// Request for metadata of added or updated messages based on client timestamp;
+message MessageListRequest {
+  // Region targeted by request;
+  Region region = 1;
+  // Timestamp of most recent API request from the client;
+  int64 last_query_time = 2;
+}
+
+// Server -> Phone;
+// Collection of MessageInfo matching MessageListRequest;
+message MessageListResponse {
+  // Matching Message metadata collection;
+  repeated MessageInfo message_info = 1;
+  // Latest Message timestamp included in the MessageInfo collection;
+  int64 max_response_timestamp = 2;
+}
+
+// Phone -> Server GetMessages(new_message_ids);
+// Request to download the details of given query ids;
+message MessageRequest {
+  // Collection of Message metadata, used to pull specific Message objects;
+  repeated MessageInfo requested_queries = 1;
+}
+
+// Server -> Phone (list of messages corresponding to touch points where
+// infection can occur);
+message MessageResponse {
+  // Collection of Narrowcast messages matching MessageRequest criteria
+  repeated NarrowcastMessage narrowcast_messages = 1;
+}
+
+// Phone <-> Server;
+// Narrowcast Message object;
+message NarrowcastMessage {
+  // Message displayed to user on match;
+  string user_message = 1;
+  // Area of infection risk;
+  Area area = 2;
+}
+
+// Geographic region quantized by precision of lat/long;
+message Region {
+  // Latitude source;
+  double latitude_prefix = 1;
+  // Longitude source;
+  double longitude_prefix = 2;
+  // Mantissa mask/precision bits;
+  int32 precision = 3;
+}
+
+// Request error message;
 message RequestValidationResult {
-  // Collection of validation failure messages
+  // Collection of individual request validation failures;
   repeated RequestValidationFailure failures = 1;
 }
 
-// Individual NarrowCast request validation failure message
-// Describes why a request failed, generally for developer use only
+// Individual request failure message;
 message RequestValidationFailure {
-  // Validation error message
+  // Validation error message;
   string message = 1;
-  // Failing property name
+  // Name of parameter failing validation;
   string property = 2;
 }
